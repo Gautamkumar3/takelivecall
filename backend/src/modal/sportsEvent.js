@@ -17,7 +17,7 @@ const sportsEventSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide the event start time"],
   },
-  total_players: {
+  max_players: {
     type: Number,
     required: [true, "Please provide the number of players for this event."],
   },
@@ -25,10 +25,18 @@ const sportsEventSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide the event location"],
   },
-  participants: [
+
+  players: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+      },
+      status: {
+        type: String,
+        enum: ["requested", "accepted", "rejected"],
+        default: "requested",
+      },
     },
   ],
   organizer: {
@@ -37,3 +45,6 @@ const sportsEventSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+const Event = mongoose.model("event", sportsEventSchema);
+module.exports = Event;
