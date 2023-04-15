@@ -85,7 +85,7 @@ const sendRequestToJoin = async (req, res) => {
     await event.save();
     return res.status(200).send({
       status: "success",
-      messsage: "Request send to the organizer",
+      message: "Request send to the organizer",
       data: event,
     });
   } catch (er) {
