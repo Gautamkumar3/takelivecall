@@ -6,12 +6,14 @@ const {
   organiserCheckRequest,
   getAllPlayersByAcceptedPlayer,
   findAllEventByUser,
+  getSingleEvent,
 } = require("../controller/event");
 const AuthMiddleware = require("../middleware/AuthMiddleware");
 
 const EventRouter = express.Router();
 
 EventRouter.get("/", getAllEvent);
+EventRouter.get("/:id", getSingleEvent);
 EventRouter.post("/create", AuthMiddleware, createEvent);
 EventRouter.post("/request/:id", AuthMiddleware, sendRequestToJoin);
 EventRouter.post(

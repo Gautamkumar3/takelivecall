@@ -28,10 +28,34 @@ const getAllEvent = async (req, res) => {
   }
 };
 
+const getSingleEvent = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const event = await EventModal.findById(id);
+    if (!event) {
+      return res
+        .status(404)
+        .send({ status: "error", message: "Event not found" });
+    } else {
+      return res.status(200).send({
+        status: "success",
+        message: "Event get successfully",
+        data: event,
+      });
+    }
+  } catch (er) {
+    return res.status(500).send({ status: "error", message: er.message });
+  }
+};
+
+
+// http://localhost:8080/event/request/64399ea141c2f9a96eafd3b9
+
 const sendRequestToJoin = async (req, res) => {
   const eventId = req.params.id;
   const userId = req.userId;
   const user_name = req.user_name;
+
   try {
     const event = await EventModal.findById(eventId);
     if (!event) {
@@ -45,7 +69,7 @@ const sendRequestToJoin = async (req, res) => {
         .status(400)
         .send({ status: "error", message: "Event is full" });
     }
-
+ 
     const alreadyJoined = event.players.find((player) => {
       return player.user.toString() === userId;
     });
@@ -180,6 +204,7 @@ const findAllEventByUser = async (req, res) => {
 module.exports = {
   createEvent,
   getAllEvent,
+  getSingleEvent,
   sendRequestToJoin,
   organiserCheckRequest,
   getAllPlayersByAcceptedPlayer,
