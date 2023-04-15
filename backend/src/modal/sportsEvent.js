@@ -37,6 +37,9 @@ const sportsEventSchema = new mongoose.Schema({
         enum: ["requested", "accepted", "rejected"],
         default: "requested",
       },
+      name: {
+        type: String,
+      },
     },
   ],
   organizer: {

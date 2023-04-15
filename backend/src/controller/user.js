@@ -45,7 +45,7 @@ const userLogin = async (req, res) => {
         .status(401)
         .send({ status: "error", message: "Invalid Credentials" });
     } else {
-      let token = jwt.sign({ id: user._id, email: user.email }, secretKey, {
+      let token = jwt.sign({ id: user._id, name: user.user_name }, secretKey, {
         expiresIn: "1 day",
       });
 

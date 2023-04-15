@@ -13,6 +13,7 @@ const AuthMiddleware = async (req, res, next) => {
     jwt.verify(token, secretKey, (err, user) => {
       if (!err) {
         req.userId = user.id;
+        req.user_name = user.name;
         next();
       } else {
         return res
