@@ -31,7 +31,7 @@ const EventDetails = () => {
   function handleRequest(id) {
     axios
       .post(
-        `http://localhost:8080/event/request/${id}`,
+        `https://takelivecall-api-production.up.railway.app/event/request/${id}`,
         {},
         {
           headers: {

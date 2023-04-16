@@ -12,12 +12,11 @@ import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 
 const Register = () => {
-
   const [data, setData] = useState({
     user_name: "",
     password: "",
   });
-    
+
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -28,29 +27,32 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     await axios
-       .post("http://localhost:8080/user/register", data)
-       .then((res) => {
-         toast({
-           title: `Status code ${res.status}`,
-           description: `${res.data.message}`,
-           status: "success",
-           duration: 4000,
-           isClosable: true,
-           position: "top",
-         });
-         navigate("/login");
-       })
-       .catch((er) => {
-         toast({
-           title: `Status code ${er.response.status}`,
-           description: `${er.response.data.message || "Something went wrong"}`,
-           status: "error",
-           duration: 4000,
-           isClosable: true,
-           position: "top",
-         });
-       });
+    await axios
+      .post(
+        "https://takelivecall-api-production.up.railway.app/user/register",
+        data
+      )
+      .then((res) => {
+        toast({
+          title: `Status code ${res.status}`,
+          description: `${res.data.message}`,
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        });
+        navigate("/login");
+      })
+      .catch((er) => {
+        toast({
+          title: `Status code ${er.response.status}`,
+          description: `${er.response.data.message || "Something went wrong"}`,
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        });
+      });
   };
 
   return (

@@ -4,9 +4,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const getAllPlayers = async (id, token) => {
-  let res = await axios.get(`http://localhost:8080/event/allplayer/${id}`, {
-    headers: { token },
-  });
+  let res = await axios.get(
+    `https://takelivecall-api-production.up.railway.app/event/allplayer/${id}`,
+    {
+      headers: { token },
+    }
+  );
   return res.data;
 };
 

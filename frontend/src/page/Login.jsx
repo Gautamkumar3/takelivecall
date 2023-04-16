@@ -29,7 +29,10 @@ const Login = () => {
     e.preventDefault();
     console.log(data);
     await axios
-      .post("http://localhost:8080/user/login", data)
+      .post(
+        "https://takelivecall-api-production.up.railway.app/user/login",
+        data
+      )
       .then((res) => {
         toast({
           title: `Status code ${res.status}`,

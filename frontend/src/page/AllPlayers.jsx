@@ -28,9 +28,13 @@ const AllPlayers = () => {
 
   function handleRequest(status, eventId, id) {
     axios
-      .post(`http://localhost:8080/event/request/${eventId}/${id}`, status, {
-        headers: { token: user_data.token },
-      })
+      .post(
+        `https://takelivecall-api-production.up.railway.app/event/request/${eventId}/${id}`,
+        status,
+        {
+          headers: { token: user_data.token },
+        }
+      )
 
       .then((res) => {
         dispatch(getEvenDetailstData(eventId));

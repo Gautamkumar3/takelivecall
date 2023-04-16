@@ -11,7 +11,8 @@ import {
   GET_SEARCH_EVENT_SUCCESS,
 } from "./event.types";
 
-const api = "http://localhost:8080";
+// const api = "http://localhost:8080";
+const api = "https://takelivecall-api-production.up.railway.app";
 const user_data = JSON.parse(localStorage.getItem("user_data"));
 
 export const getEventData = () => async (dispatch) => {

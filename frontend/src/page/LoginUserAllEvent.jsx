@@ -4,9 +4,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const allEvent = async (token) => {
-  let res = await axios.get(`http://localhost:8080/event/user/alldata`, {
-    headers: { token },
-  });
+  let res = await axios.get(
+    `https://takelivecall-api-production.up.railway.app/event/user/alldata`,
+    {
+      headers: { token },
+    }
+  );
   return res.data;
 };
 

@@ -5,7 +5,8 @@ import {
   GET_EVENTDETAILS_SUCCESS,
 } from "./eventdetails.type";
 
-const api = "http://localhost:8080";
+// const api = "http://localhost:8080";
+const api = "https://takelivecall-api-production.up.railway.app";
 
 export const getEvenDetailstData = (id) => async (dispatch) => {
   dispatch({ type: GET_EVENTDETAILS_LOADING });
