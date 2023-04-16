@@ -30,11 +30,17 @@ const CreateEvent = () => {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    setData({ ...data, [name]: type === "number" ? +value : value });
+    setData({
+      ...data,
+      [name]: type === "number" ? +value : value,
+    });
   };
+
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     dispatch(createEventData(data)).then((res) => {
       if (res.status === "success") {
         toast({

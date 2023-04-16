@@ -25,14 +25,6 @@ const EnrolledPlayer = () => {
     });
   }, []);
 
-  if (data?.length === 0) {
-    return (
-      <Heading textAlign={"center"} fontWeight={"500"} my={"5%"}>
-        No players are in waitlist
-      </Heading>
-    );
-  }
-
   return (
     <Box mt={"5%"}>
       <Heading

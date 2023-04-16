@@ -23,6 +23,17 @@ const LoginUserAllEvent = () => {
     });
   }, []);
 
+  function convertAMPM(time) {
+    if (time) {
+      let h = time?.split(":")[0];
+      let k =
+        +h >= 12
+          ? `${24 - h}:${time.split(":")[1]}PM`
+          : `${h}:${time.split(":")[1]}AM`;
+      return k;
+    }
+  }
+
   return (
     <Box mt={"5%"}>
       <Heading
@@ -47,7 +58,7 @@ const LoginUserAllEvent = () => {
             </Text>
             <Text>
               <b>Time : </b>
-              <Badge colorScheme={"blue"}> {el.start_time}</Badge>
+              <Badge colorScheme={"blue"}> {convertAMPM(el.start_time)}</Badge>
             </Text>
             <Text>
               <b>Location : </b>

@@ -28,6 +28,17 @@ const EventDetails = () => {
     return filteredData;
   }
 
+  function convertAMPM(time) {
+    if (time) {
+      let h = time?.split(":")[0];
+      let k =
+        +h >= 12
+          ? `${24 - h}:${time.split(":")[1]}PM`
+          : `${h}:${time.split(":")[1]}AM`;
+      return k;
+    }
+  }
+
   function handleRequest(id) {
     axios
       .post(
@@ -91,7 +102,7 @@ const EventDetails = () => {
         </Text>
         <Text>
           <b>Event Start Time :</b>{" "}
-          <Badge colorScheme="green">{data.start_time}</Badge>
+          <Badge colorScheme="green">{convertAMPM(data?.start_time)}</Badge>
         </Text>
         <Text>
           <b>Max Players :</b> {data.max_players}

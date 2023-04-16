@@ -4,6 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 const EventTableData = ({ _id, sport_name, start_time, date, description }) => {
   const navigate = useNavigate();
+
+  function convertAMPM(time) {
+    let h = time.split(":")[0];
+    let k =
+      +h >= 12
+        ? `${24 -h}:${time.split(":")[1]}PM`
+        : `${h}:${time.split(":")[1]}AM`;
+    return k;
+  }
   return (
     <Tr>
       <Td>{sport_name}</Td>
@@ -14,7 +23,7 @@ const EventTableData = ({ _id, sport_name, start_time, date, description }) => {
         <Badge colorScheme="blue">{date?.split("T")[0]}</Badge>
       </Td>
       <Td>
-        <Badge colorScheme="blue">{start_time}</Badge>
+        <Badge colorScheme="blue">{convertAMPM(start_time)}</Badge>
       </Td>
       <Td>
         <Button

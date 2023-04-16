@@ -10,6 +10,7 @@ import {
   Center,
   useToast,
   Heading,
+  Input,
 } from "@chakra-ui/react";
 import React from "react";
 import { useEffect } from "react";
@@ -25,6 +26,8 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getEventData());
   }, []);
+
+ 
 
   return (
     <Box bg={"gray.100"}>
