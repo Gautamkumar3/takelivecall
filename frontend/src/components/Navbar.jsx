@@ -26,6 +26,7 @@ const Navbar = () => {
     >
       <Link to="/">Dashboard</Link>
       <Link to="/create_event">Event Form</Link>
+      <Link to="/user/allevent">All Events</Link>
 
       {!data ? (
         <>

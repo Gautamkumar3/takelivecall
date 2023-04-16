@@ -6,6 +6,9 @@ import {
   GET_EVENT_ERROR,
   GET_EVENT_LOADING,
   GET_EVENT_SUCCESS,
+  GET_SEARCH_EVENT_ERROR,
+  GET_SEARCH_EVENT_LOADING,
+  GET_SEARCH_EVENT_SUCCESS,
 } from "./event.types";
 
 const api = "http://localhost:8080";
@@ -33,6 +36,18 @@ export const createEventData = (data) => async (dispatch) => {
     return res.data;
   } catch (er) {
     dispatch({ type: CREATE_EVENT_ERROR, payload: er.message });
+    return er.message;
+  }
+};
+
+export const getSearchedEventData = (query) => async (dispatch) => {
+  dispatch({ type: GET_SEARCH_EVENT_LOADING });
+  try {
+    let res = await axios.get(`${api}/event/search?q=${query}`);
+    dispatch({ type: GET_SEARCH_EVENT_SUCCESS, payload: res.data.data });
+    return res.data;
+  } catch (er) {
+    dispatch({ type: GET_SEARCH_EVENT_ERROR, payload: er.message });
     return er.message;
   }
 };

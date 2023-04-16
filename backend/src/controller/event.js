@@ -188,9 +188,30 @@ const findAllEventByUser = async (req, res) => {
       messsage: "All data get successfully.",
       data: allEvent,
     });
-    res.send(allEvent);
   } catch (er) {
     return res.status(500).send({ status: "error", message: er.message });
+  }
+};
+
+const getSearchedResult = async (req, res) => {
+  console.log(req.query)
+  let keyword = {};
+  if (req.query.q) {
+    keyword = req.query.q;
+  }
+  console.log(keyword);
+  try {
+    const searchedEvent = await EventModal.find({
+      sport_name: { $regex: keyword, $options: "i" },
+    });
+
+    return res.status(200).send({
+      status: "success",
+      messsage: "All data get successfully.",
+      data: searchedEvent,
+    });
+  } catch (er) {
+    return res.status(500).send({ status: "error", message: er.message,a:"Sdata" });
   }
 };
 
@@ -202,4 +223,5 @@ module.exports = {
   organiserCheckRequest,
   getAllPlayersByAcceptedPlayer,
   findAllEventByUser,
+  getSearchedResult,
 };
