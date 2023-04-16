@@ -7,7 +7,7 @@ const createEvent = async (req, res) => {
     await eventData.save();
     return res.status(200).send({
       status: "success",
-      messsage: "Event created successfully",
+      message: "Event created successfully",
       data: eventData,
     });
   } catch (er) {
@@ -48,7 +48,6 @@ const getSingleEvent = async (req, res) => {
   }
 };
 
-
 // http://localhost:8080/event/request/64399ea141c2f9a96eafd3b9
 
 const sendRequestToJoin = async (req, res) => {
@@ -69,7 +68,7 @@ const sendRequestToJoin = async (req, res) => {
         .status(400)
         .send({ status: "error", message: "Event is full" });
     }
- 
+
     const alreadyJoined = event.players.find((player) => {
       return player.user.toString() === userId;
     });
@@ -139,7 +138,7 @@ const organiserCheckRequest = async (req, res) => {
     await event.save();
     return res.status(200).send({
       status: "success",
-      messsage: `Your request is ${status} by the orgainzer`,
+      message: `Your request is ${status} by the orgainzer`,
       data: request,
     });
   } catch (er) {
@@ -147,10 +146,10 @@ const organiserCheckRequest = async (req, res) => {
   }
 };
 
-// http://localhost:8080/event/allplayer/64399ea141c2f9a96eafd3b9/64399ebc41c2f9a96eafd3bd
+// http://localhost:8080/event/allplayer/64399ea141c2f9a96eafd3b9
 
 const getAllPlayersByAcceptedPlayer = async (req, res) => {
-  const { eventId, playerId } = req.params;
+  const { eventId } = req.params;
   try {
     const event = await EventModal.findById(eventId);
     if (!event) {
@@ -159,26 +158,20 @@ const getAllPlayersByAcceptedPlayer = async (req, res) => {
         .send({ status: "error", message: "Event not found" });
     }
 
-    const request = event.players.find(
-      (player) => player._id.toString() === playerId
+    const filteredData = event.players.filter(
+      (player) => player.status === "accepted"
     );
 
-    if (!request) {
-      return res
-        .status(404)
-        .send({ status: "error", message: "Request not found" });
-    }
-
-    if (request.status === "accepted") {
+    if (filteredData.length === 0) {
+      return res.status(404).send({
+        status: "error",
+        message: "Your are not joined in this event.",
+      });
+    } else {
       return res.status(200).send({
         status: "success",
         message: "All players data get successfully",
-        data: event.players,
-      });
-    } else {
-      return res.status(404).send({
-        status: "error",
-        message: "Your request is not accepted",
+        data: filteredData,
       });
     }
   } catch (er) {

@@ -11,6 +11,8 @@ import {
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { createEventData } from "../store/event/event.action";
 
 const CreateEvent = () => {
   const [data, setData] = useState({
@@ -24,6 +26,7 @@ const CreateEvent = () => {
 
   const toast = useToast();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -32,7 +35,26 @@ const CreateEvent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
+    dispatch(createEventData(data)).then((res) => {
+      if (res.status === "success") {
+        toast({
+          title: `${res.message}`,
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        });
+        navigate("/");
+      } else {
+        toast({
+          title: `Something went wrong.`,
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    });
   };
 
   return (

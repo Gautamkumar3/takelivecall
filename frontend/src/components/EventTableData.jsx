@@ -1,4 +1,4 @@
-import { Badge, Button, Td, Tr } from "@chakra-ui/react";
+import { Badge, Button, Td, Text, Tr } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +7,9 @@ const EventTableData = ({ _id, sport_name, start_time, date, description }) => {
   return (
     <Tr>
       <Td>{sport_name}</Td>
-      <Td>{description}</Td>
+      <Td maxWidth={"150px"}>
+        <Text noOfLines={1}>{description}</Text>
+      </Td>
       <Td>
         <Badge colorScheme="blue">{date?.split("T")[0]}</Badge>
       </Td>

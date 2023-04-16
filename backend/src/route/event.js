@@ -22,7 +22,7 @@ EventRouter.post(
   organiserCheckRequest
 );
 EventRouter.get(
-  "/allplayer/:eventId/:playerId",
+  "/allplayer/:eventId",
   AuthMiddleware,
   getAllPlayersByAcceptedPlayer
 );

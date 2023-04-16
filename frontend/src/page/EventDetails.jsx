@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Center,
+  Flex,
   Heading,
   Text,
   useToast,
@@ -10,18 +11,17 @@ import {
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-
-const getEventDetails = async (id) => {
-  let res = await axios.get(`http://localhost:8080/event/${id}`);
-  return res.data;
-};
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getEvenDetailstData } from "../store/eventDetails/eventdetails.action";
 
 const EventDetails = () => {
   const { id } = useParams();
-  const [data, setData] = useState({});
   const toast = useToast();
   const userData = JSON.parse(localStorage.getItem("user_data"));
+  const dispatch = useDispatch();
+  const { data } = useSelector((store) => store.eventDetailsData);
+  const navigate = useNavigate();
 
   function checkEnrolledPlayer(arr) {
     let filteredData = arr?.filter((el) => el.status === "accepted").length;
@@ -39,8 +39,8 @@ const EventDetails = () => {
           },
         }
       )
-        .then((res) => {
-          console.log(res.data)
+      .then((res) => {
+        console.log(res.data);
         toast({
           title: `Status code ${res.status}`,
           description: `${res.data.message}`,
@@ -63,9 +63,7 @@ const EventDetails = () => {
   }
 
   useEffect(() => {
-    getEventDetails(id).then((res) => {
-      setData(res.data);
-    });
+    dispatch(getEvenDetailstData(id));
   }, [id]);
 
   return (
@@ -99,20 +97,30 @@ const EventDetails = () => {
           <b>Max Players :</b> {data.max_players}
         </Text>
         <Text>
-          <b>Enrolled Players :</b> {checkEnrolledPlayer(data?.players)}
-        </Text>
-        <Text>
           <b>Location :</b> {data.location}
         </Text>
-        <Center>
+        <Link to={`/enrolled_player/${data._id}`}>
+          <Text color={"blue"}>
+            <b>Enrolled Players :</b> {checkEnrolledPlayer(data?.players)}
+          </Text>
+        </Link>
+
+        <Text>
+          <b>Waitlisted Players :</b>{" "}
+          {data?.players?.length - checkEnrolledPlayer(data?.players)}
+        </Text>
+
+        <Flex justify={"space-between"} my={3}>
           <Button
-            colorScheme="whatsapp"
-            my={3}
-            onClick={() => handleRequest(id)}
+            colorScheme="blue"
+            onClick={() => navigate(`/all_player/${id}`)}
           >
+            Go to see all players
+          </Button>
+          <Button colorScheme="whatsapp" onClick={() => handleRequest(id)}>
             Request to join
           </Button>
-        </Center>
+        </Flex>
       </Box>
     </Box>
   );
